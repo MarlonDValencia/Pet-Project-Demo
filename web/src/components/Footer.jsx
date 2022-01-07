@@ -1,9 +1,9 @@
 const Footer = () => {
   return (
     <>
-      <nav class="navbar navbar-dark bg-dark">
+      <nav class="navbar navbar-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+          <p class="navbar-brand" href="#">
             <img
               src="https://www.sofka.com.co/wp-content/uploads/2021/02/Group-35.png"
               alt=""
@@ -13,7 +13,7 @@ const Footer = () => {
             />
             <br />
             © Sofka 2022. Todos los derechos reservados.
-          </a>
+          </p>
         </div>
       </nav>
     </>
