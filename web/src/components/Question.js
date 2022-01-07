@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import "../index.css";
 
 export const Question = ({ question, excerpt, onDelete }) => (
   <article className={excerpt ? 'question-excerpt' : 'question'}>

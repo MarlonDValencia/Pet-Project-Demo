@@ -11,6 +11,7 @@ import "firebase/auth";
 import { login, logout } from './actions/authActions';
 
 import { PublicNavbar, PrivateNavbar } from './components/Navbar'
+import Footer from './components/Footer';
 import HomePage from './pages/HomePage'
 import SingleQuestionPage from './pages/SingleQuestionPage'
 import QuestionsPage from './pages/QuestionsPage'
@@ -32,7 +33,7 @@ const auth = firebase.auth();
 
 const App = ({ dispatch }) => {
   const [user] = useAuthState(auth);
-  if(user){
+  if (user) {
     dispatch(login(user.email, user.uid))
   }
   return (
@@ -65,6 +66,7 @@ const App = ({ dispatch }) => {
           </Switch>
         </>
       }
+      <Footer />
     </Router>
   )
 }
