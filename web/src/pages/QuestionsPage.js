@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+} from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { fetchQuestions } from '../actions/questionActions'
 import { Question } from '../components/Question'
+import SingleQuestionPage from './SingleQuestionPage'
 
 const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
 
     const [state, setstate] = useState({
-        category: ""
+        category: "All"
+    })
+
+    const [busqueda, setBusqueda] = useState({
+        valor: null
     })
 
     useEffect(() => {
@@ -20,6 +31,12 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
             return (questions.map(question => <Question key={question.id} question={question} excerpt />))
         }
         return (questions.filter(question => question.category === prop)).map(question => <Question key={question.id} question={question} excerpt />)
+    }
+
+    const renderSpecificQuestions = (prop) => {
+        return questions.filter(question => question.question.startsWith(prop)).map(question => <ul>
+            <li><Link to={`/question/${question.id}`} className="text-dark mx-1 mt-1">{question.question}</Link></li>
+        </ul>)
     }
 
     const onClickAll = () => {
@@ -54,11 +71,46 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
         });
     }
 
+    const onChange = (e) => {
+        if (e.target.value.lenght == 0 || !e.target.value) {
+            setBusqueda({
+                valor: null
+            })
+        } else {
+            setBusqueda({
+                valor: e.target.value
+            })
+        }
+        renderSpecificQuestions(busqueda.valor)
+    }
+
+    const onKeyPress = (e) => {
+
+        if (e.key === "Enter") {
+            console.log("Entro")
+            return (
+                <Switch>
+                    <Route exact path="/question/61db2f1a9de572431b57c143" component={SingleQuestionPage} />
+                </Switch>)
+        }
+    }
+
+    const enviar = () => {
+        return (
+            <Switch>
+                <Route exact path="/question/61db2f1a9de572431b57c143" component={SingleQuestionPage} />
+            </Switch>)
+    }
+
     return (
+
         <div className='container'>
             <div class="input-group rounded container">
-                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                    aria-describedby="search-addon" />
+                <input onChange={onChange} onKeyPress={onKeyPress} type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            </div>
+            <div>
+                {renderSpecificQuestions(busqueda.valor)}
+                {enviar}
             </div>
             <section>
                 <h3>Filters</h3>
@@ -86,9 +138,9 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
                 </div>
             </section>
             <h1>Questions</h1>
-            {(state.category) ? (
+            {(state.category === "All") ? (
                 renderQuestions(state.category)
-            ) : (renderQuestions())}
+            ) : (renderQuestions(state.category))}
         </div>
     )
 }
