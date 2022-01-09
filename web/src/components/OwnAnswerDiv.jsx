@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from 'sweetalert2'
-import { fetchOwnerQuestions, deleteAnswer } from '../actions/questionActions'
+import { fetchOwnerQuestions, deleteQuestion } from '../actions/questionActions'
 
 export const OwnAnswerDiv = ({ answer }) => {
   
@@ -31,7 +31,7 @@ export const OwnAnswerDiv = ({ answer }) => {
           'Su respuesta ha sido borrada.',
           'success'
         )
-        dispatch(deleteAnswer(answer.questionId))
+        dispatch(deleteAnswer(answer))
       }
     })
   }

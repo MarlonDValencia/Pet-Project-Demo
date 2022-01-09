@@ -12,6 +12,7 @@ import { login, logout } from './actions/authActions';
 
 import { PublicNavbar, PrivateNavbar } from './components/Navbar'
 import RegisterPage from "./pages/RegisterPage";
+import Profile from './components/Profile';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage'
 import LoginPage from './components/LoginPage';
@@ -48,6 +49,7 @@ const App = ({ dispatch }) => {
             <Route exact path="/" component={() => {
               return <HomePage><SignOut dispatch={dispatch} /></HomePage>
             }} />
+            <Route exact path="/profile" component={Profile}/>
             <Route exact path="/questions" component={QuestionsPage} />
             <Route exact path="/question/:id" component={SingleQuestionPage} />
             <Route exact path="/list" component={OwnerQuestionsPage} />

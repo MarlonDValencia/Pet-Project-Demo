@@ -27,6 +27,7 @@ export const PrivateNavbar = () => (
         />
       </Link>
       <Link to="/">Home</Link>
+      <Link to="profile">My Profile</Link>
       <Link to="/questions">Questions</Link>
       <Link to="/new">New</Link>
       <Link to="/list">List</Link>

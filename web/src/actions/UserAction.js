@@ -1,6 +1,7 @@
 const URL_BASE = 'http://localhost:8080';
 
 export const GET_USER = "GET_USER";
+export const CREATE_USER = "CREATE_USER"
 
 export function fetchUser(email) {
   return async dispatch => {
@@ -14,3 +15,18 @@ export function fetchUser(email) {
   }
 }
 
+export function fetchNewUser(json) {
+  return async function(dispatch) {
+      return await fetch(URL_BASE + "/createUser", {
+          method: "POST",
+          body: JSON.stringify(json),
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }).then(response => response.json())
+      .then(json => {
+          dispatch({ type: CREATE_USER, payload: json })
+      })  
+      .catch(error => console.error('Error:', error))
+  };
+}

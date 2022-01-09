@@ -5,6 +5,7 @@ import { fetchQuestion } from '../actions/questionActions'
 
 import { Question } from '../components/Question'
 import { Answer } from '../components/Answer'
+import { OwnAnswerDiv } from '../components/OwnAnswerDiv'
 import { Link } from 'react-router-dom'
 
 const SingleQuestionPage = ({
@@ -29,7 +30,10 @@ const SingleQuestionPage = ({
 
   const renderAnswers = () => {
     return (question.answers && question.answers.length) ? question.answers.map(answer => (
-      <Answer key={answer.id} answer={answer} />
+      (answer.userId === userId) ? (
+        <OwnAnswerDiv key={answer.id} answer={answer}/>
+      ) : (<Answer key={answer.id} answer={answer} />)
+
     )) : <p>Empty answer!</p>;
   }
 
