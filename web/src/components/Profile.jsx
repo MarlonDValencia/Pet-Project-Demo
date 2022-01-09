@@ -15,7 +15,8 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
-    info: {},
+    firstName:"",
+    lastName:""
   });
 
   useEffect(() => {
@@ -24,12 +25,20 @@ const Profile = () => {
 
   const completeEdit = (e) => {
     e.preventDefault();
-    const email = "pruebapost@gmail.com "
-    const name = "David"
-    const lastname = "Pandales"
-    json = {"email":email,"firstName": name, "lastName":lastname}
+    const email = user.email
+    const name = state.firstName
+    const lastname = state.lastName
+    const json = {"email":email,"firstName":name,"lastName":lastname}
+    console.log((json))
     dispatch(fetchNewUser(json));
   };
+
+  const onChange = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value
+    })
+  }
 
   return (
     <>
@@ -55,10 +64,12 @@ const Profile = () => {
             </label>
             <div class="col-sm-10">
               <input
+                name="firstName"
                 type="text"
                 placeholder="Nombre"
                 class="form-control"
                 id="inputPassword"
+                onChange={onChange}
               />
             </div>
           </div>
@@ -68,10 +79,12 @@ const Profile = () => {
             </label>
             <div class="col-sm-10">
               <input
+                name="lastName"
                 type="text"
                 class="form-control"
                 placeholder="Apellido"
                 id="inputPassword"
+                onChange={onChange}
               />
             </div>
           </div>

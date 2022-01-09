@@ -8,7 +8,6 @@ export function fetchUser(email) {
     return await fetch(`${URL_BASE}/getUser/${email}`)
       .then(response => {response.json()})
       .then(json => {
-        console.log("aaa"+json)
         dispatch({ type: GET_USER, payload: { info: json } })
       })
       .catch(error => console.error('Error:', error))
@@ -18,11 +17,9 @@ export function fetchUser(email) {
 export function fetchNewUser(json) {
   return async function(dispatch) {
       return await fetch(URL_BASE + "/createUser", {
-          method: "POST",
-          body: JSON.stringify(json),
-          headers: {
-              'Content-Type': 'application/json'
-          }
+          method: "PUT",
+          body: json,
+          headers: {'Content-Type':'application/json'}
       }).then(response => response.json())
       .then(json => {
           dispatch({ type: CREATE_USER, payload: json })
