@@ -6,7 +6,6 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "firebase/auth";
-import { getTemplateInstallPackage } from "create-react-app/createReactApp";
 
 const Profile = () => {
   const auth = firebase.auth();
