@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-
+import React, { useEffect, useState } from 'react'
 import { fetchQuestion } from '../actions/questionActions'
-
+import { useDispatch } from 'react-redux'
 import { Question } from '../components/Question'
 import { Answer } from '../components/Answer'
 import { OwnAnswerDiv } from '../components/OwnAnswerDiv'
 import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import { connect } from 'react-redux'
+import { deleteAnswer } from '../actions/questionActions'
 
 const SingleQuestionPage = ({
   match,
-  dispatch,
   question,
   hasErrors,
   loading,
@@ -20,6 +20,38 @@ const SingleQuestionPage = ({
   useEffect(() => {
     dispatch(fetchQuestion(id))
   }, [dispatch, id])
+
+  const dispatch = useDispatch();
+  const [clickDelete, setClickDelete] = useState(false)
+
+  
+  useEffect(() => {
+    dispatch(fetchQuestion(id))
+    setClickDelete(false);
+  }, [dispatch, id, clickDelete])
+  const onDelete = (id) => {
+
+    Swal.fire({
+      title: 'Seguro que quieres eliminar esta respuesta',
+      showConfirmButton: false,
+      showDenyButton: true,
+      showCancelButton: true,
+      denyButtonText: `Eliminar`,
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+      } else if (result.isDenied) {
+        dispatch(deleteAnswer(id));
+        setClickDelete(true);
+        Swal.fire({
+          icon: "info",
+          title: "Respuesta eliminada!",
+          text: `La respuesta ha sido eliminada exitosamente.`,
+        })
+      }
+    })
+  }
 
   const renderQuestion = () => {
     if (loading.question) return <p>Loading question...</p>
@@ -31,7 +63,7 @@ const SingleQuestionPage = ({
   const renderAnswers = () => {
     return (question.answers && question.answers.length) ? question.answers.map(answer => (
       (answer.userId === userId) ? (
-        <OwnAnswerDiv key={answer.id} answer={answer}/>
+        <OwnAnswerDiv key={answer.id} answer={answer} excerpt onDelete={onDelete} />
       ) : (<Answer key={answer.id} answer={answer} />)
 
     )) : <p>Empty answer!</p>;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const OwnAnswer = ({ answer }) => (
+export const OwnAnswer = ({ answer, excerpt, onDelete }) => (
   <>
   <div className="answer">
     <p>{answer.answer}</p>

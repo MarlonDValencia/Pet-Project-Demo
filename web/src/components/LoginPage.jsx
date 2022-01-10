@@ -4,8 +4,6 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   Redirect,
   Link
 } from 'react-router-dom'

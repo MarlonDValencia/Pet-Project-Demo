@@ -97,27 +97,6 @@ export function deleteQuestion(id) {
     }
 }
 
-export function deleteAnswer(answer) {
-    console.log(answer.questionId)
-    return async dispatch => {
-        dispatch(loading())
-        try {
-            await fetch(`${URL_BASE}/deleteAnswer/${answer.questionId}`,
-                {
-                    method: 'DELETE',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-            )
-            dispatch(success({redirect: `/list`}));
-        } catch (error) {
-            dispatch(failure())
-        }
-    }
-}
-
 export function postAnswer(answer) {
     return async dispatch => {
         dispatch(loading())
@@ -139,4 +118,22 @@ export function postAnswer(answer) {
     }
 }
 
-
+export function deleteAnswer(id) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            await fetch(`${URL_BASE}/deleteAnswer/${id}`,
+                {
+                    method: 'DELETE',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
+            dispatch(success());
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
