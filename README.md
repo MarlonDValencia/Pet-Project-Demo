@@ -7,7 +7,7 @@
 
 -Autenticación con user y contraseña agregada
 
--Busqueda y filtros de preguntas implementado
+-Busqueda y filtros de preguntas implementado (El buscador es key sensitive)
 
 -Menu de actualizacion de datos personales (Nombre Completo)
 
