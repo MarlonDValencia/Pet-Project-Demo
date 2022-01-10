@@ -12,6 +12,17 @@ public class Answer {
     private String answer;
     private Integer position;
 
+    public Answer() {
+    }
+
+    public Answer(String id, String userId, String questionId, String answer, Integer position) {
+        this.id = id;
+        this.userId = userId;
+        this.questionId = questionId;
+        this.answer = answer;
+        this.position = position;
+    }
+
     public Integer getPosition() {
         return position;
     }

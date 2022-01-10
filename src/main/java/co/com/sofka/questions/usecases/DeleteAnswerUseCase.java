@@ -12,18 +12,16 @@ import java.util.function.Function;
 @Service
 @Validated
 public class DeleteAnswerUseCase implements Function<String, Mono<Void>> {
-    private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
 
-    public DeleteAnswerUseCase(AnswerRepository answerRepository, QuestionRepository questionRepository ) {
-        this.questionRepository = questionRepository;
+    public DeleteAnswerUseCase(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
 
     @Override
     public Mono<Void> apply(String id) {
         Objects.requireNonNull(id, "Id is required");
-        return questionRepository.deleteById(id)
+        return answerRepository.deleteById(id)
                 .switchIfEmpty(Mono.defer(() -> answerRepository.deleteByQuestionId(id)));
     }
 }
