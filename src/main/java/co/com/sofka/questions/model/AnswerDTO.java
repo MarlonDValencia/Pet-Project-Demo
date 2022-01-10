@@ -36,6 +36,12 @@ public class AnswerDTO {
         this.id = id;
     }
 
+    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer) {
+        this.userId = userId;
+        this.questionId = questionId;
+        this.answer = answer;
+    }
+
     public Integer getPosition() {
         return Optional.ofNullable(position).orElse(1);
     }
