@@ -34,8 +34,11 @@ firebase.initializeApp({
 });
 
 const auth = firebase.auth();
+const user = auth.currentUser;
+
 
 const App = ({ dispatch }) => {
+
   const [user] = useAuthState(auth);
   if (user) {
     dispatch(login(user.email, user.uid))

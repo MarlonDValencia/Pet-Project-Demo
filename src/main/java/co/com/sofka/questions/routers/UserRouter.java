@@ -43,7 +43,7 @@ public class UserRouter {
                         .contentType(MediaType.TEXT_PLAIN)
                         .bodyValue(result));
         return route(
-                POST("/createUser").and(accept(MediaType.APPLICATION_JSON)),
+                PUT("/createUser").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(UserDTO.class).flatMap(executor)
         );
     }

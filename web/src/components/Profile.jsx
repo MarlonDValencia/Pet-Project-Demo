@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../actions/UserAction";
-import { fetchNewUser } from "../actions/UserAction";
+import React, { useState } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -11,34 +8,22 @@ const Profile = () => {
   const auth = firebase.auth();
   const [user] = useAuthState(auth);
 
-  const persona = useSelector((state) => state.info);
-  const dispatch = useDispatch();
-
   const [state, setState] = useState({
-    firstName:"",
-    lastName:""
+    nombre: "",
   });
 
-  useEffect(() => {
-    dispatch(fetchUser("marlondvalencia@email.net"));
-  }, [state]);
-
-  const completeEdit = (e) => {
-    e.preventDefault();
-    const email = user.email
-    const name = state.firstName
-    const lastname = state.lastName
-    const json = {"email":email,"firstName":name,"lastName":lastname}
-    console.log((json))
-    dispatch(fetchNewUser(json));
+  const completeEdit = () => {
+    user.updateProfile({
+      displayName: state.nombre,
+    }).then(alert("Nombre actualizado"));
   };
 
   const onChange = (e) => {
     setState({
       ...state,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <>
@@ -52,38 +37,22 @@ const Profile = () => {
               <input
                 type="text"
                 readonly
-                class="form-control-plaintext"
+                className="form-control-plaintext"
                 id="staticEmail"
                 value={user.email}
               />
             </div>
           </div>
           <div class="mb-3 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">
+            <label class="col-sm-2 col-form-label">
               Nombre
             </label>
             <div class="col-sm-10">
               <input
-                name="firstName"
+                name="nombre"
                 type="text"
-                placeholder="Nombre"
-                class="form-control"
-                id="inputPassword"
-                onChange={onChange}
-              />
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">
-              Nombre
-            </label>
-            <div class="col-sm-10">
-              <input
-                name="lastName"
-                type="text"
-                class="form-control"
-                placeholder="Apellido"
-                id="inputPassword"
+                placeholder={user.displayName}
+                className="form-control"
                 onChange={onChange}
               />
             </div>
